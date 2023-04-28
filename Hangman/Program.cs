@@ -2,6 +2,8 @@
 {
     internal class Program
     {
+        static string? name;
+        static int numberOfGuesses = 0;
         static void Main(string[] args)
         {
             StartGame();
@@ -17,10 +19,11 @@
 
         static void AskForUserName()
         {
-            Console.WriteLine("Asking user for name...");
+            Console.WriteLine("Enter your name:");
+            name = Console.ReadLine();
         }
 
-        private static void PlayGame()
+        static void PlayGame()
         {
             Console.WriteLine("Playing the game...");
             DisplayMaskedWord();
@@ -35,11 +38,14 @@
         static void AskForLetter()
         {
             Console.WriteLine("Asking for letter...");
+            numberOfGuesses++;
         }
 
-        private static void EndGame()
+        static void EndGame()
         {
             Console.WriteLine("Game over...");
+            Console.WriteLine($"Thank you for playing {name}");
+            Console.WriteLine($"Total number of guesses: {numberOfGuesses}");
         }
     }
 }
