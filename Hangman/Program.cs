@@ -7,7 +7,7 @@ namespace Hangman
     internal class Program
     {
         
-        static string correctWord = "hangman";
+        static string correctWord = "";
         static int numberOfGuesses = 0;
         static char[] letters;
         static Player player;
@@ -15,11 +15,28 @@ namespace Hangman
 
         static void Main(string[] args)
         {
-            StartGame();
-            PlayGame();
-            EndGame();
+            try
+            {
+                GenerateRandomWord();
+                StartGame();
+                PlayGame();
+                EndGame();
+            }
+            catch(Exception e)
+            {
+                //TODO: Create a log...
+                Console.WriteLine("Oops, something went wrong!\n");
+            }
 
         }
+
+        private static void GenerateRandomWord()
+        {
+            FileHandler fh = new FileHandler(); //create a new FileHandler object
+            string random = fh.handleFile(); //acquire a random word
+            correctWord = random.ToString(); //assign it as the correct word
+        }
+
         private static void StartGame()
         {
             letters = new char[correctWord.Length];
@@ -98,7 +115,9 @@ namespace Hangman
 
         static void EndGame()
         {
-            Console.WriteLine("Game over...");
+            Console.Clear();
+            Console.WriteLine("Congrats!");
+            Console.WriteLine($"Correct Word: {correctWord}");
             Console.WriteLine($"Thank you for playing {player.Name}");
             Console.WriteLine($"Total number of guesses: {numberOfGuesses}");
             Console.WriteLine($"Total score: {player.Score}");
